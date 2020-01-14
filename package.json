@@ -19,7 +19,8 @@
   "homepage": "https://github.com/landercosta/yelpcamp#readme",
   "dependencies": {
     "ejs": "^3.0.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.8.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
