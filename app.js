@@ -1,5 +1,9 @@
+const seedDB = require('./seeds');
 const express = require('express');
 const mongoose = require('mongoose');
+const Campground = require('./models/campground');
+const Comment = require('./models/comment');
+// const Comment = require('./models/user');
 
 const app = express();
 
@@ -8,26 +12,7 @@ mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true,
 app.use(express.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
-// SCHEMA SETUP
-const campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-const Campground = mongoose.model('Campground', campgroundSchema);
-
-// Campground.create({
-//   name: 'Desert Survivor',
-//   image: 'https://i.ytimg.com/vi/N8v-fBj-x2s/maxresdefault.jpg',
-//   description: 'You will camp on a desert. Good luck!'
-// }, (err, campground) => {
-//   if(err){
-//     console.log(err);
-//   } else {
-//     console.log(campground);
-//   }
-// });
+seedDB();
 
 app.get('/', (req, res) => {
   res.render('landing');
@@ -67,16 +52,13 @@ app.get('/campgrounds/new', (req, res) =>{
 
 // SHOW - Show info about one campground
 app.get('/campgrounds/:id', (req, res) => {
-  Campground.findById(req.params.id, (err, foundCampground) => {
+  Campground.findById(req.params.id).populate('comments').exec( (err, foundCampground) => {
     if(err){
       console.log(err);
     } else {
       res.render('show', {campground: foundCampground});
     }
   });
-  req.params.id
-
-  res.render('show');
 });
 
 app.listen(3000, () => {
