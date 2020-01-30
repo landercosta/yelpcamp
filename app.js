@@ -9,6 +9,7 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 seedDB();
