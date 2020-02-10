@@ -1,8 +1,11 @@
-const seedDB = require('./seeds');
-const express = require('express');
-const mongoose = require('mongoose');
-const Campground = require('./models/campground');
-const Comment = require('./models/comment');
+const express       = require('express'),
+      mongoose      = require('mongoose'),
+      passport      = require('passport'),
+      LocalStrategy = require('passport-local'),
+      Campground    = require('./models/campground'),
+      Comment       = require('./models/comment'),
+      User          = require('./models/user'),
+      seedDB        = require('./seeds');
 
 const app = express();
 
