@@ -82,7 +82,7 @@ app.get('/campgrounds/:id', (req, res) => {
 // COMMENTS ROUTES
 // ==============================
 
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, foundCampground) => {
     if(err){
       console.log(err);
@@ -151,6 +151,17 @@ app.post('/login', middleware, (req, res) => {
   res.send('login logic happens here');
 });
 
+// logout route
+app.get('/logout', (req, res) => {
+  req.logout();res.redirect('/campgrounds');
+});
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login');
+}
 
 app.listen(3000, () => {
   console.log('The YelpCamp server has started.');
